@@ -170,11 +170,9 @@ zwarning(const char *cmd, const char *fmt, va_list ap)
 
 /**/
 mod_export void
-zerr(VA_ALIST1(const char *fmt))
-VA_DCL
+zerr(const char *fmt, ...)
 {
     va_list ap;
-    VA_DEF_ARG(const char *fmt);
 
     if (errflag || noerrs) {
 	if (noerrs < 2)
@@ -183,64 +181,50 @@ VA_DCL
     }
     errflag |= ERRFLAG_ERROR;
 
-    VA_START(ap, fmt);
-    VA_GET_ARG(ap, fmt, const char *);
+    va_start(ap, fmt);
     zwarning(NULL, fmt, ap);
     va_end(ap);
 }
 
 /**/
 mod_export void
-zerrnam(VA_ALIST2(const char *cmd, const char *fmt))
-VA_DCL
+zerrnam(const char *cmd, const char *fmt, ...)
 {
     va_list ap;
-    VA_DEF_ARG(const char *cmd);
-    VA_DEF_ARG(const char *fmt);
 
     if (errflag || noerrs)
 	return;
     errflag |= ERRFLAG_ERROR;
 
-    VA_START(ap, fmt);
-    VA_GET_ARG(ap, cmd, const char *);
-    VA_GET_ARG(ap, fmt, const char *);
+    va_start(ap, fmt);
     zwarning(cmd, fmt, ap);
     va_end(ap);
 }
 
 /**/
 mod_export void
-zwarn(VA_ALIST1(const char *fmt))
-VA_DCL
+zwarn(const char *fmt, ...)
 {
     va_list ap;
-    VA_DEF_ARG(const char *fmt);
 
     if (errflag || noerrs)
 	return;
 
-    VA_START(ap, fmt);
-    VA_GET_ARG(ap, fmt, const char *);
+    va_start(ap, fmt);
     zwarning(NULL, fmt, ap);
     va_end(ap);
 }
 
 /**/
 mod_export void
-zwarnnam(VA_ALIST2(const char *cmd, const char *fmt))
-VA_DCL
+zwarnnam(const char *cmd, const char *fmt, ...)
 {
     va_list ap;
-    VA_DEF_ARG(const char *cmd);
-    VA_DEF_ARG(const char *fmt);
 
     if (errflag || noerrs)
 	return;
 
-    VA_START(ap, fmt);
-    VA_GET_ARG(ap, cmd, const char *);
-    VA_GET_ARG(ap, fmt, const char *);
+    va_start(ap, fmt);
     zwarning(cmd, fmt, ap);
     va_end(ap);
 }
@@ -250,16 +234,13 @@ VA_DCL
 
 /**/
 mod_export void
-dputs(VA_ALIST1(const char *message))
-VA_DCL
+dputs(const char *message, ...)
 {
     char *filename;
     FILE *file;
     va_list ap;
-    VA_DEF_ARG(const char *message);
 
-    VA_START(ap, message);
-    VA_GET_ARG(ap, message, const char *);
+    va_start(ap, message);
     if ((filename = getsparam_u("ZSH_DEBUG_LOG")) != NULL &&
 	(file = fopen(filename, "a")) != NULL) {
 	zerrmsg(file, message, ap);

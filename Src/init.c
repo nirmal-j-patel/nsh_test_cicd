@@ -1773,15 +1773,12 @@ mod_export int zle_load_state;
 
 /**/
 mod_export char *
-zleentry(VA_ALIST1(int cmd))
-VA_DCL
+zleentry(int cmd, ...)
 {
     char *ret = NULL;
     va_list ap;
-    VA_DEF_ARG(int cmd);
 
-    VA_START(ap, cmd);
-    VA_GET_ARG(ap, cmd, int);
+    va_start(ap, cmd);
 
 #if defined(LINKED_XMOD_zshQszle) || defined(UNLINKED_XMOD_zshQszle)
     /* autoload */
