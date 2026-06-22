@@ -66,16 +66,6 @@ AS_HELP_STRING([--enable-zsh-debug],[compile with debug code and debugger symbol
   AC_DEFINE(DEBUG)
 fi])
 
-dnl Do you want zsh memory allocation routines.
-ifdef([zsh-mem],[undefine([zsh-mem])])dnl
-AH_TEMPLATE([ZSH_MEM],
-[Define to 1 if you want to use zsh's own memory allocation routines])
-AC_ARG_ENABLE(zsh-mem,
-AS_HELP_STRING([--enable-zsh-mem],[compile with zsh memory allocation routines - deprecated]),
-[if test x$enableval = xyes; then
-  AC_DEFINE(ZSH_MEM)
-fi])
-
 dnl Do you want to debug zsh memory allocation routines.
 ifdef([zsh-mem-debug],[undefine([zsh-mem-debug])])dnl
 AH_TEMPLATE([ZSH_MEM_DEBUG],
@@ -94,16 +84,6 @@ AC_ARG_ENABLE(zsh-mem-warning,
 AS_HELP_STRING([--enable-zsh-mem-warning],[print warnings for errors in memory allocation]),
 [if test x$enableval = xyes; then
   AC_DEFINE(ZSH_MEM_WARNING)
-fi])
-
-dnl Do you want to turn on error checking for free().
-ifdef([zsh-secure-free],[undefine([zsh-secure-free])])dnl
-AH_TEMPLATE([ZSH_SECURE_FREE],
-[Define to 1 if you want to turn on memory checking for free().])
-AC_ARG_ENABLE(zsh-secure-free,
-AS_HELP_STRING([--enable-zsh-secure-free],[turn on error checking for free()]),
-[if test x$enableval = xyes; then
-  AC_DEFINE(ZSH_SECURE_FREE)
 fi])
 
 dnl Do you want to debug zsh heap allocation?
