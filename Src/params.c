@@ -277,30 +277,10 @@ static const struct gsu_integer rprompt_indent_gsu =
 
 /* Nodes for special parameters for parameter hash table */
 
-#ifdef HAVE_UNION_INIT
-# define BR(X) {X}
-typedef struct param initparam;
-#else
-# define BR(X) X
-typedef struct iparam {
-    struct hashnode *next;
-    char *nam;			/* hash data                             */
-    int flags;			/* PM_* flags (defined in zsh.h)         */
-    void *value;
-    void *gsu;			/* get/set/unset methods */
-    int base;			/* output base                           */
-    int width;			/* output field width                    */
-    char *env;			/* location in environment, if exported  */
-    char *ename;		/* name of corresponding environment var */
-    Param old;			/* old struct for use with local         */
-    int level;			/* if (old != NULL), level of localness  */
-} initparam;
-#endif
-
-static initparam special_params[] ={
-#define GSU(X) BR((GsuScalar)(void *)(&(X)))
-#define NULL_GSU BR((GsuScalar)(void *)NULL)
-#define IPDEF1(A,B,C) {{NULL,A,PM_INTEGER|PM_SPECIAL|C},BR(NULL),GSU(B),10,0,NULL,NULL,NULL,0}
+static struct param special_params[] ={
+#define GSU(X) {(GsuScalar)(void *)(&(X))}
+#define NULL_GSU {(GsuScalar)(void *)NULL}
+#define IPDEF1(A,B,C) {{NULL,A,PM_INTEGER|PM_SPECIAL|C},{NULL},GSU(B),10,0,NULL,NULL,NULL,0}
 IPDEF1("#", pound_gsu, PM_READONLY_SPECIAL),
 IPDEF1("ERRNO", errno_gsu, PM_UNSET),
 IPDEF1("GID", gid_gsu, PM_DONTIMPORT),
@@ -313,7 +293,7 @@ IPDEF1("UID", uid_gsu, PM_DONTIMPORT),
 IPDEF1("EUID", euid_gsu, PM_DONTIMPORT),
 IPDEF1("TTYIDLE", ttyidle_gsu, PM_READONLY_SPECIAL),
 
-#define IPDEF2(A,B,C) {{NULL,A,PM_SCALAR|PM_SPECIAL|C},BR(NULL),GSU(B),0,0,NULL,NULL,NULL,0}
+#define IPDEF2(A,B,C) {{NULL,A,PM_SCALAR|PM_SPECIAL|C},{NULL},GSU(B),0,0,NULL,NULL,NULL,0}
 IPDEF2("USERNAME", username_gsu, PM_DONTIMPORT),
 IPDEF2("-", dash_gsu, PM_READONLY_SPECIAL),
 IPDEF2("histchars", histchars_gsu, PM_DONTIMPORT),
@@ -348,7 +328,7 @@ LCIPDEF("LC_TIME"),
 # endif
 #endif /* USE_LOCALE */
 
-#define IPDEF4(A,B) {{NULL,A,PM_INTEGER|PM_READONLY_SPECIAL},BR((void *)B),GSU(varint_readonly_gsu),10,0,NULL,NULL,NULL,0}
+#define IPDEF4(A,B) {{NULL,A,PM_INTEGER|PM_READONLY_SPECIAL},{(void *)B},GSU(varint_readonly_gsu),10,0,NULL,NULL,NULL,0}
 IPDEF4("!", &lastpid),
 IPDEF4("$", &mypid),
 IPDEF4("?", &lastval),
@@ -357,8 +337,8 @@ IPDEF4("LINENO", &lineno),
 IPDEF4("PPID", &ppid),
 IPDEF4("ZSH_SUBSHELL", &zsh_subshell),
 
-#define IPDEF5(A,B,F) {{NULL,A,PM_INTEGER|PM_SPECIAL},BR((void *)B),GSU(F),10,0,NULL,NULL,NULL,0}
-#define IPDEF5U(A,B,F) {{NULL,A,PM_INTEGER|PM_SPECIAL|PM_UNSET},BR((void *)B),GSU(F),10,0,NULL,NULL,NULL,0}
+#define IPDEF5(A,B,F) {{NULL,A,PM_INTEGER|PM_SPECIAL},{(void *)B},GSU(F),10,0,NULL,NULL,NULL,0}
+#define IPDEF5U(A,B,F) {{NULL,A,PM_INTEGER|PM_SPECIAL|PM_UNSET},{(void *)B},GSU(F),10,0,NULL,NULL,NULL,0}
 IPDEF5("COLUMNS", &zterm_columns, zlevar_gsu),
 IPDEF5("LINES", &zterm_lines, zlevar_gsu),
 IPDEF5U("ZLE_RPROMPT_INDENT", &rprompt_indent, rprompt_indent_gsu),
@@ -366,14 +346,14 @@ IPDEF5("SHLVL", &shlvl, varinteger_gsu),
 IPDEF5("FUNCNEST", &zsh_funcnest, varinteger_gsu),
 
 /* Don't import internal integer status variables. */
-#define IPDEF6(A,B,F) {{NULL,A,PM_INTEGER|PM_SPECIAL|PM_DONTIMPORT},BR((void *)B),GSU(F),10,0,NULL,NULL,NULL,0}
+#define IPDEF6(A,B,F) {{NULL,A,PM_INTEGER|PM_SPECIAL|PM_DONTIMPORT},{(void *)B},GSU(F),10,0,NULL,NULL,NULL,0}
 IPDEF6("OPTIND", &zoptind, varinteger_gsu),
 IPDEF6("TRY_BLOCK_ERROR", &try_errflag, varinteger_gsu),
 IPDEF6("TRY_BLOCK_INTERRUPT", &try_interrupt, varinteger_gsu),
 
-#define IPDEF7(A,B) {{NULL,A,PM_SCALAR|PM_SPECIAL},BR((void *)B),GSU(varscalar_gsu),0,0,NULL,NULL,NULL,0}
-#define IPDEF7R(A,B) {{NULL,A,PM_SCALAR|PM_SPECIAL|PM_DONTIMPORT_SUID},BR((void *)B),GSU(varscalar_gsu),0,0,NULL,NULL,NULL,0}
-#define IPDEF7U(A,B) {{NULL,A,PM_SCALAR|PM_SPECIAL|PM_UNSET},BR((void *)B),GSU(varscalar_gsu),0,0,NULL,NULL,NULL,0}
+#define IPDEF7(A,B) {{NULL,A,PM_SCALAR|PM_SPECIAL},{(void *)B},GSU(varscalar_gsu),0,0,NULL,NULL,NULL,0}
+#define IPDEF7R(A,B) {{NULL,A,PM_SCALAR|PM_SPECIAL|PM_DONTIMPORT_SUID},{(void *)B},GSU(varscalar_gsu),0,0,NULL,NULL,NULL,0}
+#define IPDEF7U(A,B) {{NULL,A,PM_SCALAR|PM_SPECIAL|PM_UNSET},{(void *)B},GSU(varscalar_gsu),0,0,NULL,NULL,NULL,0}
 IPDEF7("OPTARG", &zoptarg),
 IPDEF7("NULLCMD", &nullcmd),
 IPDEF7U("POSTEDIT", &postedit),
@@ -388,7 +368,7 @@ IPDEF7("PS3", &prompt3),
 IPDEF7R("PS4", &prompt4),
 IPDEF7("SPROMPT", &sprompt),
 
-#define IPDEF9(A,B,C,D) {{NULL,A,D|PM_ARRAY|PM_SPECIAL|PM_DONTIMPORT},BR((void *)B),GSU(vararray_gsu),0,0,NULL,C,NULL,0}
+#define IPDEF9(A,B,C,D) {{NULL,A,D|PM_ARRAY|PM_SPECIAL|PM_DONTIMPORT},{(void *)B},GSU(vararray_gsu),0,0,NULL,C,NULL,0}
 IPDEF9("*", &pparams, NULL, PM_ARRAY|PM_READONLY_SPECIAL|PM_DONTIMPORT),
 IPDEF9("@", &pparams, NULL, PM_ARRAY|PM_READONLY_SPECIAL|PM_DONTIMPORT),
 
@@ -396,9 +376,9 @@ IPDEF9("@", &pparams, NULL, PM_ARRAY|PM_READONLY_SPECIAL|PM_DONTIMPORT),
  * This empty row indicates the end of parameters available in
  * all emulations.
  */
-{{NULL,NULL,0},BR(NULL),NULL_GSU,0,0,NULL,NULL,NULL,0},
+{{NULL,NULL,0},{NULL},NULL_GSU,0,0,NULL,NULL,NULL,0},
 
-#define IPDEF8(A,B,C,D) {{NULL,A,D|PM_SCALAR|PM_SPECIAL},BR((void *)B),GSU(colonarr_gsu),0,0,NULL,C,NULL,0}
+#define IPDEF8(A,B,C,D) {{NULL,A,D|PM_SCALAR|PM_SPECIAL},{(void *)B},GSU(colonarr_gsu),0,0,NULL,C,NULL,0}
 IPDEF8("CDPATH", &cdpath, "cdpath", PM_TIED),
 IPDEF8("FIGNORE", &fignore, "fignore", PM_TIED),
 IPDEF8("FPATH", &fpath, "fpath", PM_TIED),
@@ -410,7 +390,7 @@ IPDEF8("ZSH_EVAL_CONTEXT", &zsh_eval_context, "zsh_eval_context", PM_READONLY_SP
 /* MODULE_PATH is not imported for security reasons */
 IPDEF8("MODULE_PATH", &module_path, "module_path", PM_DONTIMPORT|PM_TIED),
 
-#define IPDEF10(A,B) {{NULL,A,PM_ARRAY|PM_SPECIAL},BR(NULL),GSU(B),10,0,NULL,NULL,NULL,0}
+#define IPDEF10(A,B) {{NULL,A,PM_ARRAY|PM_SPECIAL},{NULL},GSU(B),10,0,NULL,NULL,NULL,0}
 
 /*
  * The following parameters are not available in sh/ksh compatibility *
@@ -444,14 +424,14 @@ IPDEF9("path", &path, "PATH", PM_TIED),
 
 IPDEF10("pipestatus", pipestatus_gsu),
 
-{{NULL,NULL,0},BR(NULL),NULL_GSU,0,0,NULL,NULL,NULL,0},
+{{NULL,NULL,0},{NULL},NULL_GSU,0,0,NULL,NULL,NULL,0},
 };
 
 /*
  * Alternative versions of colon-separated path parameters for
  * sh emulation.  These don't link to the array versions.
  */
-static initparam special_params_sh[] = {
+static struct param special_params_sh[] = {
 IPDEF8("CDPATH", &cdpath, NULL, 0),
 IPDEF8("FIGNORE", &fignore, NULL, 0),
 IPDEF8("FPATH", &fpath, NULL, 0),
@@ -463,7 +443,7 @@ IPDEF8("ZSH_EVAL_CONTEXT", &zsh_eval_context, NULL, PM_READONLY_SPECIAL),
 /* MODULE_PATH is not imported for security reasons */
 IPDEF8("MODULE_PATH", &module_path, NULL, PM_DONTIMPORT),
 
-{{NULL,NULL,0},BR(NULL),NULL_GSU,0,0,NULL,NULL,NULL,0},
+{{NULL,NULL,0},{NULL},NULL_GSU,0,0,NULL,NULL,NULL,0},
 };
 
 /*
@@ -471,7 +451,7 @@ IPDEF8("MODULE_PATH", &module_path, NULL, PM_DONTIMPORT),
  * and $@, this is not readonly.  This parameter is not directly
  * visible in user space.
  */
-static initparam argvparam_pm = IPDEF9("", &pparams, NULL, \
+static struct param argvparam_pm = IPDEF9("", &pparams, NULL, \
 				 PM_ARRAY|PM_SPECIAL|PM_DONTIMPORT);
 
 #undef BR
