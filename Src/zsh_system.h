@@ -148,29 +148,7 @@ char *alloca (size_t);
 #ifdef HAVE_GRP_H
 # include <grp.h>
 #endif
-
-#ifdef HAVE_DIRENT_H
 # include <dirent.h>
-#else /* !HAVE_DIRENT_H */
-# ifdef HAVE_SYS_NDIR_H
-#  include <sys/ndir.h>
-# endif
-# ifdef HAVE_SYS_DIR_H
-#  include <sys/dir.h>
-# endif
-# ifdef HAVE_NDIR_H
-#  include <ndir.h>
-# endif
-# define dirent direct
-# undef HAVE_STRUCT_DIRENT_D_INO
-# undef HAVE_STRUCT_DIRENT_D_STAT
-# ifdef HAVE_STRUCT_DIRECT_D_INO
-#  define HAVE_STRUCT_DIRENT_D_INO HAVE_STRUCT_DIRECT_D_INO
-# endif
-# ifdef HAVE_STRUCT_DIRECT_D_STAT
-#  define HAVE_STRUCT_DIRENT_D_STAT HAVE_STRUCT_DIRECT_D_STAT
-# endif
-#endif /* !HAVE_DIRENT_H */
 
 #ifdef HAVE_STDLIB_H
 # include <stdlib.h>
