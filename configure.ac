@@ -585,7 +585,6 @@ dnl ------------------
 dnl CHECK HEADER FILES
 dnl ------------------
 AC_HEADER_DIRENT
-AC_HEADER_STAT
 
 dnl pcre2-config --cflags may produce a -I output which needs to go into
 dnl CPPFLAGS else configure's preprocessor tests don't pick it up,
