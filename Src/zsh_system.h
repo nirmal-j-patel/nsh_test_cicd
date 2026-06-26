@@ -117,10 +117,6 @@ char *alloca (size_t);
 # include <sys/types.h>
 #endif
 
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
-
 #ifdef HAVE_STDDEF_H
 /*
  * Seen on Solaris 8 with gcc: stddef defines offsetof, which clashes
@@ -327,10 +323,6 @@ struct timespec {
 
 #ifndef HAVE_GETLOGIN
 # define getlogin() cuserid(NULL)
-#endif
-
-#ifdef HAVE_SETPGID
-# define setpgrp setpgid
 #endif
 
 /* compatibility wrappers */

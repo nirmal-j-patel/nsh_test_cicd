@@ -355,7 +355,7 @@ newptycmd(char *nam, char *pname, char **args, int echo, int nblock)
 #ifdef TIOCNOTTY
 	    if (ioctl(SHTTY, TIOCNOTTY, 0))
 		zwarnnam(nam, "%e", errno);
-	    setpgrp(0L, mypid);
+	    setpgid(0L, mypid);
 #endif
 #ifdef HAVE_SETSID
 	}

@@ -3292,7 +3292,7 @@ acquire_pgrp(void)
 	    lastpgrp = mypgrp;
 	}
 	if (mypgrp != mypid) {
-	    if (setpgrp(0, 0) == 0) {
+	    if (setpgid(0, 0) == 0) {
 		mypgrp = mypid;
 		attachtty(mypgrp);
 	    } else
@@ -3313,7 +3313,7 @@ release_pgrp(void)
 	/* in linux pid namespaces, origpgrp may never have been set */
 	if (origpgrp) {
 	    attachtty(origpgrp);
-	    setpgrp(0, origpgrp);
+	    setpgid(0, origpgrp);
 	}
 	mypgrp = origpgrp;
     }
