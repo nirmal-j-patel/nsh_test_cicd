@@ -1,0 +1,46 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    #runs-on: ubuntu-latest
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+
+
+    steps:
+    - uses: actions/checkout@v4
+    #- run: sudo apt-get -y install yodl build-essential
+    
+    - name: Install dependencies on Ubuntu
+      if: runner.os == 'Linux'
+      run: |
+        sudo apt-get update
+        sudo apt-get -s build-dep zsh
+        sudo apt-get install -y yodl build-essential
+        
+    - if: runner.os == 'macOS'
+      run: |
+        brew install ncurses pcre2 autoconf
+
+    - name: configure
+      run: |
+        ./Util/preconfig
+        ../configure --enable-zsh-debug --enable-zsh-mem-debug --enable-zsh-mem-warning --enable-zsh-secure-free --enable-zsh-heap-debug --enable-zsh-hash-debug --enable-pcre --enable-cap --enable-gdbm --enable-multibyte
+        cat config.h
+    - name: make
+      run: make
+    - name: test
+      run: TERM=xterm make check
+    # - name: make check
+    #   run: TERM=xterm make check
