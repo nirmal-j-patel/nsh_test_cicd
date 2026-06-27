@@ -35,7 +35,7 @@ jobs:
     - name: configure
       run: |
         ./Util/preconfig
-        ./configure --enable-zsh-debug --enable-zsh-mem-debug --enable-zsh-mem-warning --enable-zsh-secure-free --enable-zsh-heap-debug --enable-zsh-hash-debug --enable-pcre --enable-gdbm --enable-multibyte # --enable-cap
+        ./configure --enable-zsh-debug --enable-zsh-mem-debug --enable-zsh-mem-warning --enable-zsh-secure-free --enable-zsh-heap-debug --enable-zsh-hash-debug --enable-pcre --enable-multibyte # --enable-cap --enable-gdbm
         cat config.h
     - name: make
       run: make
