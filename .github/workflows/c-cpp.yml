@@ -30,7 +30,7 @@ jobs:
         
     - if: runner.os == 'macOS'
       run: |
-        brew install autoconf # ncurses pcre2
+        brew install autoconf gdbm # ncurses pcre2
 
     - name: configure
       run: |
