@@ -117,6 +117,8 @@ char *alloca (size_t);
 # include <sys/types.h>
 #endif
 
+# include <unistd.h>
+
 #ifdef HAVE_STDDEF_H
 /*
  * Seen on Solaris 8 with gcc: stddef defines offsetof, which clashes
