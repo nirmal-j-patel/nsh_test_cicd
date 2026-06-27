@@ -30,6 +30,8 @@
 #include "zsh.mdh"
 #include "cond.pro"
 
+#include <unistd.h>
+
 /**/
 int tracingcond;    /* updated by execcond() in exec.c */
 
