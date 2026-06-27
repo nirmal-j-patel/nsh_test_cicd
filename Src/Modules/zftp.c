@@ -56,6 +56,8 @@ typedef struct zftp_session *Zftp_session;
 /* it's a TELNET based protocol, but don't think I like doing this */
 #include <arpa/telnet.h>
 
+#include <unistd.h>
+
 /*
  * We use poll() in preference to select because some subset of manuals says
  * that's the thing to do, plus it's a bit less fiddly.  I don't actually

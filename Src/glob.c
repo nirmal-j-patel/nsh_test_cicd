@@ -30,6 +30,8 @@
 #include "zsh.mdh"
 #include "glob.pro"
 
+#include <unistd.h>
+
 #if defined(OFF_T_IS_64_BIT) && defined(__GNUC__)
 # define ALIGN64 __attribute__((aligned(8)))
 #else

@@ -30,6 +30,8 @@
 #include "zsh.mdh"
 #include "exec.pro"
 
+#include <unistd.h>
+
 /* Flags for last argument of addvars */
 
 enum {

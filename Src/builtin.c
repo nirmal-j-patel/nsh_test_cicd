@@ -34,6 +34,7 @@
 #include "builtin.pro"
 
 #include <math.h>
+#include <unistd.h>
 
 /* Builtins in the main executable */
 
