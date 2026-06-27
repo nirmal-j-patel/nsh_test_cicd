@@ -25,12 +25,11 @@ jobs:
       if: runner.os == 'Linux'
       run: |
         sudo apt-get update
-        sudo apt-get -s build-dep zsh
         sudo apt-get install -y yodl build-essential
         
     - if: runner.os == 'macOS'
       run: |
-        brew install ncurses pcre2 autoconf
+        brew install autoconf # ncurses pcre2
 
     - name: configure
       run: |
