@@ -30,6 +30,8 @@
 #include "zsh.mdh"
 #include "compat.pro"
 
+#include <unistd.h>
+
 /* Return pointer to first occurrence of string t *
  * in string s.  Return NULL if not present.      */
 
