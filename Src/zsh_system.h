@@ -275,46 +275,7 @@ struct timespec {
 # include <sys/file.h>
 #endif
 
-/* The following will only be defined if <sys/wait.h> is POSIX.    *
- * So we don't have to worry about union wait. But some machines   *
- * (NeXT) include <sys/wait.h> from other include files, so we     *
- * need to undef and then redefine the wait macros if <sys/wait.h> *
- * is not POSIX.                                                   */
-
-#ifdef HAVE_SYS_WAIT_H
 # include <sys/wait.h>
-#else
-# undef WIFEXITED
-# undef WEXITSTATUS
-# undef WIFSIGNALED
-# undef WTERMSIG
-# undef WCOREDUMP
-# undef WIFSTOPPED
-# undef WSTOPSIG
-#endif
-
-/* missing macros for wait/waitpid/wait3 */
-#ifndef WIFEXITED
-# define WIFEXITED(X) (((X)&0377)==0)
-#endif
-#ifndef WEXITSTATUS
-# define WEXITSTATUS(X) (((X)>>8)&0377)
-#endif
-#ifndef WIFSIGNALED
-# define WIFSIGNALED(X) (((X)&0377)!=0&&((X)&0377)!=0177)
-#endif
-#ifndef WTERMSIG
-# define WTERMSIG(X) ((X)&0177)
-#endif
-#ifndef WCOREDUMP
-# define WCOREDUMP(X) ((X)&0200)
-#endif
-#ifndef WIFSTOPPED
-# define WIFSTOPPED(X) (((X)&0377)==0177)
-#endif
-#ifndef WSTOPSIG
-# define WSTOPSIG(X) (((X)>>8)&0377)
-#endif
 
 #ifdef HAVE_SYS_SELECT_H
 # ifndef TIME_H_SELECT_H_CONFLICTS
