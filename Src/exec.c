@@ -1148,12 +1148,12 @@ entersubsh(int flags, struct entersubsh_ret *retp)
 	}
     } else if (thisjob != -1 && (flags & ESUB_PGRP)) {
 	if (jobtab[list_pipe_job].gleader && (list_pipe || list_pipe_child)) {
-	    if (setpgrp(0L, jobtab[list_pipe_job].gleader) == -1 ||
+	    if (setpgid(0L, jobtab[list_pipe_job].gleader) == -1 ||
 		(killpg(jobtab[list_pipe_job].gleader, 0) == -1  &&
 		 errno == ESRCH)) {
 		jobtab[list_pipe_job].gleader =
 		    jobtab[thisjob].gleader = (list_pipe_child ? mypgrp : getpid());
-		setpgrp(0L, jobtab[list_pipe_job].gleader);
+		setpgid(0L, jobtab[list_pipe_job].gleader);
 		if (!(flags & ESUB_ASYNC))
 		    attachtty(jobtab[thisjob].gleader);
 	    }
@@ -1163,7 +1163,7 @@ entersubsh(int flags, struct entersubsh_ret *retp)
 	    }
 	}
 	else if (!jobtab[thisjob].gleader ||
-		 setpgrp(0L, jobtab[thisjob].gleader) == -1) {
+		 setpgid(0L, jobtab[thisjob].gleader) == -1) {
 	    /*
 	     * This is the standard point at which a newly started
 	     * process gets put into the foreground by taking over
@@ -1178,7 +1178,7 @@ entersubsh(int flags, struct entersubsh_ret *retp)
 	    if (list_pipe_job != thisjob &&
 		!jobtab[list_pipe_job].gleader)
 		jobtab[list_pipe_job].gleader = jobtab[thisjob].gleader;
-	    setpgrp(0L, jobtab[thisjob].gleader);
+	    setpgid(0L, jobtab[thisjob].gleader);
 	    if (!(flags & ESUB_ASYNC)) {
 		attachtty(jobtab[thisjob].gleader);
 		if (retp) {
@@ -1989,7 +1989,7 @@ execpline(Estate state, wordcode slcode, int how, int last1)
 			 * do anything other than the following, but no
 			 * doubt we'll find out...
 			 */
-			setpgrp(0L, mypgrp = getpid());
+			setpgid(0L, mypgrp = getpid());
 			close(synch[1]);
 			kill(getpid(), SIGSTOP);
 			list_pipe = 0;
