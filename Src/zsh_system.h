@@ -173,11 +173,6 @@ char *alloca (size_t);
 #endif /* !HAVE_DIRENT_H */
 
 #ifdef HAVE_STDLIB_H
-# ifdef ZSH_MEM
-   /* malloc and calloc are macros in GNU's stdlib.h unless the
-    * the __MALLOC_0_RETURNS_NULL macro is defined */
-#  define __MALLOC_0_RETURNS_NULL
-# endif
 # include <stdlib.h>
 #endif
 

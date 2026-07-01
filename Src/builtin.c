@@ -91,10 +91,6 @@ static struct builtin builtins[] =
     BUILTIN("local", BINF_PLUSOPTS | BINF_MAGICEQUALS | BINF_PSPECIAL | BINF_ASSIGN, (HandlerFunc)bin_typeset, 0, -1, 0, "AE:%F:%HL:%R:%TUZ:%ahi:%lnp:%rtux", NULL),
     BUILTIN("logout", 0, bin_break, 0, 1, BIN_LOGOUT, NULL, NULL),
 
-#if defined(ZSH_MEM) & defined(ZSH_MEM_DEBUG)
-    BUILTIN("mem", 0, bin_mem, 0, 0, 0, "v", NULL),
-#endif
-
 #if defined(ZSH_PAT_DEBUG)
     BUILTIN("patdebug", 0, bin_patdebug, 1, -1, 0, "p", NULL),
 #endif
