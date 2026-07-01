@@ -41,20 +41,9 @@
  */
 
 static
-#ifdef HAVE_UNION_INIT
-# define BR(X) {X}
-struct widget
-#else /* !HAVE_UNION_INIT */
-# define BR(X) X
-struct intwidget {
-    int flags;
-    Thingy first;
-    ZleIntFunc fn;
-}
-#endif /* !HAVE_UNION_INIT */
-widgets[] = {
+struct widget widgets[] = {
 #define W(zle_flags, t_firstname, functionname) \
-    { WIDGET_INT | zle_flags, t_firstname, BR(functionname) },
+    { WIDGET_INT | zle_flags, t_firstname, {functionname} },
 #include "widgets.list"
 #undef W
 };

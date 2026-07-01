@@ -527,16 +527,6 @@ esac
 
 AC_FUNC_ALLOCA              dnl Check how to get `alloca'.
 
-dnl If the compiler supports union initialisation
-AC_CACHE_CHECK(if the compiler supports union initialisation,
-zsh_cv_c_have_union_init,
-[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[union{void *p;long l;}u={0};]], [[u.l=1;]])],[zsh_cv_c_have_union_init=yes],[zsh_cv_c_have_union_init=no])])
-AH_TEMPLATE([HAVE_UNION_INIT],
-[Define to 1 if the compiler can initialise a union.])
-if test x$zsh_cv_c_have_union_init = xyes; then
-  AC_DEFINE(HAVE_UNION_INIT)
-fi
-
 dnl Checking if the compiler supports variable-length arrays
 AC_CACHE_CHECK(if the compiler supports variable-length arrays,
 zsh_cv_c_variable_length_arrays,
