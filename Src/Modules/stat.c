@@ -30,6 +30,27 @@
 #include "stat.mdh"
 #include "stat.pro"
 
+// TODO: cleanup/remove these macros later
+#ifndef S_ISDOOR
+# define S_ISDOOR(m) (0)
+#endif
+
+#ifndef S_ISMPC
+# define S_ISMPC(m) (0)
+#endif
+
+#ifndef S_ISNWK
+# define S_ISNWK(m) (0)
+#endif
+
+#ifndef S_ISOFD
+# define S_ISOFD(m) (0)
+#endif
+
+#ifndef S_ISOFL
+# define S_ISOFL(m) (0)
+#endif
+
 enum statnum { ST_DEV, ST_INO, ST_MODE, ST_NLINK, ST_UID, ST_GID,
 		   ST_RDEV, ST_SIZE, ST_ATIM, ST_MTIM, ST_CTIM,
 		   ST_BLKSIZE, ST_BLOCKS, ST_READLINK, ST_COUNT };
