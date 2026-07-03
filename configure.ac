@@ -607,16 +607,6 @@ if test x$dynamic = xyes; then
   AC_CHECK_HEADERS(dlfcn.h)
   AC_CHECK_HEADERS(dl.h)
 fi
- 
-AH_TEMPLATE([WINSIZE_IN_PTEM],
-[Define if your should include sys/stream.h and sys/ptem.h.])
-AC_CACHE_CHECK(for streams headers including struct winsize,
-zsh_cv_winsize_in_ptem,
-[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/stream.h>
-#include <sys/ptem.h>]], [[struct winsize wsz]])],[zsh_cv_winsize_in_ptem=yes],[zsh_cv_winsize_in_ptem=no])])
-if test x$zsh_cv_winsize_in_ptem = xyes; then
-  AC_DEFINE(WINSIZE_IN_PTEM)
-fi
 
 dnl -------------------
 dnl CHECK FOR LIBRARIES

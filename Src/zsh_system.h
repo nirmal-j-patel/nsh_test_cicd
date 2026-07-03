@@ -295,11 +295,6 @@ struct timespec {
 
 #include <sys/ioctl.h>
 
-#ifdef WINSIZE_IN_PTEM
-# include <sys/stream.h>
-# include <sys/ptem.h>
-#endif
-
 #ifdef HAVE_SYS_PARAM_H
 # include <sys/param.h>
 #endif
