@@ -293,9 +293,8 @@ struct timespec {
 # endif  /* HAVE_TERMIO_H  */
 #endif   /* HAVE_TERMIOS_H */
 
-#if defined(GWINSZ_IN_SYS_IOCTL) || defined(IOCTL_IN_SYS_IOCTL)
-# include <sys/ioctl.h>
-#endif
+#include <sys/ioctl.h>
+
 #ifdef WINSIZE_IN_PTEM
 # include <sys/stream.h>
 # include <sys/ptem.h>

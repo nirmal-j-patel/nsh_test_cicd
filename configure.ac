@@ -607,32 +607,6 @@ if test x$dynamic = xyes; then
   AC_CHECK_HEADERS(dlfcn.h)
   AC_CHECK_HEADERS(dl.h)
 fi
-
-AH_TEMPLATE([GWINSZ_IN_SYS_IOCTL],
-[Define if TIOCGWINSZ is defined in sys/ioctl.h but not in termios.h.])
-if test x$ac_cv_header_termios_h = xyes; then
-  AC_CACHE_CHECK(TIOCGWINSZ in termios.h,
-  zsh_cv_header_termios_h_tiocgwinsz,
-  [AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <termios.h>]], [[int x = TIOCGWINSZ;]])],[zsh_cv_header_termios_h_tiocgwinsz=yes],[zsh_cv_header_termios_h_tiocgwinsz=no])])
-else
-  zsh_cv_header_termios_h_tiocgwinsz=no
-fi
-if test x$zsh_cv_header_termios_h_tiocgwinsz = xno; then
-  AC_CACHE_CHECK(TIOCGWINSZ in sys/ioctl.h,
-  zsh_cv_header_sys_ioctl_h_tiocgwinsz,
-  [AC_LINK_IFELSE([AC_LANG_PROGRAM([[
-#ifdef HAVE_SYS_TYPES_H
-# include <sys/types.h>
-#endif
-#include <sys/ioctl.h>]], [[int x = TIOCGWINSZ;]])],[zsh_cv_header_sys_ioctl_h_tiocgwinsz=yes],[zsh_cv_header_sys_ioctl_h_tiocgwinsz=no])])
-  if test x$zsh_cv_header_sys_ioctl_h_tiocgwinsz = xyes; then
-    AC_DEFINE(GWINSZ_IN_SYS_IOCTL)
-  fi
-fi
  
 AH_TEMPLATE([WINSIZE_IN_PTEM],
 [Define if your should include sys/stream.h and sys/ptem.h.])
@@ -2073,41 +2047,6 @@ if test "$ac_cv_prog_cc_stdc" != no; then
   if test x$zsh_cv_header_sys_stat_h_mknod_proto = xyes; then
     AC_DEFINE(HAVE_MKNOD_PROTO)
   fi
-fi
-
-dnl ----------------------------------------
-dnl presence and location of ioctl prototype
-dnl ----------------------------------------
-AC_CACHE_CHECK(for ioctl prototype in <unistd.h> or <termios.h>,
-zsh_cv_header_unistd_h_termios_h_ioctl_proto,
-[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[
-#ifdef HAVE_UNISTD_H
-# include <unistd.h>
-#endif
-#ifdef HAVE_TERMIOS_H
-# include <termios.h>
-#endif
-double ioctl();]], [[int i;]])],[zsh_cv_header_unistd_h_termios_h_ioctl_proto=no],[zsh_cv_header_unistd_h_termios_h_ioctl_proto=yes])])
-
-if test x$zsh_cv_header_unistd_h_termios_h_ioctl_proto = xno; then
-  AC_CACHE_CHECK(for ioctl prototype in <sys/ioctl.h>,
-  zsh_cv_header_sys_ioctl_h_ioctl_proto,
-  [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/ioctl.h>
-  double ioctl();]], [[int i;]])],[zsh_cv_header_sys_ioctl_h_ioctl_proto=no],[zsh_cv_header_sys_ioctl_h_ioctl_proto=yes])])
-else
-  zsh_cv_header_sys_ioctl_h_ioctl_proto=no
-fi
-
-AH_TEMPLATE([HAVE_IOCTL_PROTO],
-[Define to 1 if there is a prototype defined for ioctl() on your system.])
-if test x$zsh_cv_header_unistd_h_termios_h_ioctl_proto = xyes || \
-   test x$zsh_cv_header_sys_ioctl_h_ioctl_proto = xyes; then
-  AC_DEFINE(HAVE_IOCTL_PROTO)
-fi
-AH_TEMPLATE([IOCTL_IN_SYS_IOCTL],
-[Define to 1 if we must include <sys/ioctl.h> to get a prototype for ioctl().])
-if test x$zsh_cv_header_sys_ioctl_h_ioctl_proto = xyes; then
-  AC_DEFINE(IOCTL_IN_SYS_IOCTL)
 fi
 
 dnl -----------
