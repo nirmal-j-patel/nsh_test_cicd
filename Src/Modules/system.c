@@ -172,7 +172,7 @@ bin_sysread(char *nam, char **args, Options ops, UNUSED(int func))
 	    select_tv.tv_usec = 0;
 	}
 
-	while ((ret = select(infd+1, (SELECT_ARG_2_T) &fds,
+	while ((ret = select(infd+1, (fd_set *) &fds,
 			     NULL, NULL,&select_tv)) < 0) {
 	    if (errno != EINTR || errflag || retflag || breaks || contflag)
 		break;

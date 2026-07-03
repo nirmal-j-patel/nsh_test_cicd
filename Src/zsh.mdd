@@ -17,7 +17,7 @@ signames.o sort.o string.o subst.o text.o utils.o \
 openssh_bsd_setres_id.o"
 
 headers="../config.h zsh_system.h zsh.h sigcount.h signals.h \
-prototypes.h hashtable.h ztype.h"
+hashtable.h ztype.h"
 hdrdeps="zshcurses.h zshterm.h"
 
 :<<\Make

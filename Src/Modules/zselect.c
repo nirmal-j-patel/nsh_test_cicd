@@ -29,6 +29,7 @@
 
 #include "zselect.mdh"
 #include "zselect.pro"
+#include <sys/select.h>
 
 /* Helper functions */
 
@@ -176,8 +177,8 @@ bin_zselect(char *nam, char **args, UNUSED(Options ops), UNUSED(int func))
 
     errno = 0;
     do {
-	i = select(fdmax, (SELECT_ARG_2_T)fdset, (SELECT_ARG_2_T)(fdset+1),
-		   (SELECT_ARG_2_T)(fdset+2), tvptr);
+	i = select(fdmax, (fd_set *)fdset, (fd_set *)(fdset+1),
+		   (fd_set *)(fdset+2), tvptr);
     } while (i < 0 && errno == EINTR && !errflag);
 
     if (i <= 0) {

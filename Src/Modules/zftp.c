@@ -2276,7 +2276,7 @@ zftp_test(UNUSED(char *name), UNUSED(char **args), UNUSED(int flags))
     FD_SET(zfsess->control->fd, &f);
     tv.tv_sec = 0;
     tv.tv_usec = 0;
-    if ((ret = select(zfsess->control->fd +1, (SELECT_ARG_2_T) &f,
+    if ((ret = select(zfsess->control->fd +1, (fd_set *) &f,
 		      NULL, NULL, &tv)) < 0
 	&& errno != EINTR)
 	zfclose(0);

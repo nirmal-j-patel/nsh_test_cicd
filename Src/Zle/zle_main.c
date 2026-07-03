@@ -385,7 +385,7 @@ breakread(int fd, char *buf, int n)
     FD_ZERO(&f);
     FD_SET(fd, &f);
 
-    return (select(fd + 1, (SELECT_ARG_2_T) & f, NULL, NULL, NULL) == -1 ?
+    return (select(fd + 1, (fd_set *) & f, NULL, NULL, NULL) == -1 ?
 	    EOF : read(fd, buf, n));
 }
 
@@ -616,7 +616,7 @@ raw_getbyte(long do_keytmout, char *cptr, int full)
 		tvptr = NULL;
 
 	    winch_unblock();
-	    selret = select(fdmax+1, (SELECT_ARG_2_T) & foofd,
+	    selret = select(fdmax+1, (fd_set *) & foofd,
 			    NULL, NULL, tvptr);
 	    winch_block();
 # endif
@@ -1184,7 +1184,7 @@ zlecore(void)
 	    tv.tv_sec = 0;
 	    if ((tv.tv_usec = cost * costmult) > 500000)
 		tv.tv_usec = 500000;
-	    if (!kungetct && select(SHTTY+1, (SELECT_ARG_2_T) & foofd,
+	    if (!kungetct && select(SHTTY+1, (fd_set *) & foofd,
 				    NULL, NULL, &tv) <= 0)
 		zrefresh();
 	} else

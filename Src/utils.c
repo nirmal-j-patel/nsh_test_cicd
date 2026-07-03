@@ -2681,7 +2681,7 @@ read_poll(int fd, int *readchar, int polltty, zlong microseconds)
     FD_ZERO(&foofd);
     if (fd > -1) {
 	FD_SET(fd, &foofd);
-	ret = select(fd+1, (SELECT_ARG_2_T) &foofd, NULL, NULL, &expire_tv);
+	ret = select(fd+1, (fd_set *) &foofd, NULL, NULL, &expire_tv);
     } else
 	ret = select(0, NULL, NULL, NULL, &expire_tv);
 #else

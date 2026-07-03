@@ -608,7 +608,7 @@ ptyread(char *nam, Ptycmd cmd, char **args, int noblock, int mustmatch)
 	    FD_ZERO(&foofd);
 	    FD_SET(cmd->fd, &foofd);
 	    pollret = select(cmd->fd+1,
-			 (SELECT_ARG_2_T) &foofd, NULL, NULL, &expire_tv);
+			 (fd_set *) &foofd, NULL, NULL, &expire_tv);
 #else
 #ifdef FIONREAD
 	    int val;

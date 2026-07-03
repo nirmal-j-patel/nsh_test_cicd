@@ -2011,44 +2011,6 @@ zsh_PATH_UTMP(wtmp)
 zsh_PATH_UTMP(utmpx,utx.active)
 zsh_PATH_UTMP(wtmpx)
 
-dnl -------------------
-dnl brk/sbrk PROTOTYPES
-dnl -------------------
-AC_CACHE_CHECK(for brk() prototype in <unistd.h>,
-zsh_cv_header_unistd_h_brk_proto,
-[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <unistd.h>
-double brk();]], [[int i;]])],[zsh_cv_header_unistd_h_brk_proto=no],[zsh_cv_header_unistd_h_brk_proto=yes])])
-AH_TEMPLATE([HAVE_BRK_PROTO],
-[Define to 1 if there is a prototype defined for brk() on your system.])
-if test x$zsh_cv_header_unistd_h_brk_proto = xyes; then
-  AC_DEFINE(HAVE_BRK_PROTO)
-fi
-
-AC_CACHE_CHECK(for sbrk() prototype in <unistd.h>,
-zsh_cv_header_unistd_h_sbrk_proto,
-[AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <unistd.h>
-double sbrk();]], [[int i;]])],[zsh_cv_header_unistd_h_sbrk_proto=no],[zsh_cv_header_unistd_h_sbrk_proto=yes])])
-AH_TEMPLATE([HAVE_SBRK_PROTO],
-[Define to 1 if there is a prototype defined for sbrk() on your system.])
-if test x$zsh_cv_header_unistd_h_sbrk_proto = xyes; then
-  AC_DEFINE(HAVE_SBRK_PROTO)
-fi
-
-dnl -----------------------
-dnl mknod prototype for OSF
-dnl -----------------------
-AH_TEMPLATE([HAVE_MKNOD_PROTO],
-[Define to 1 if there is a prototype defined for mknod() on your system.])
-if test "$ac_cv_prog_cc_stdc" != no; then
-  AC_CACHE_CHECK(for mknod prototype in <sys/stat.h>,
-  zsh_cv_header_sys_stat_h_mknod_proto,
-  [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/stat.h>
-   int mknod(double x);]], [[int i;]])],[zsh_cv_header_sys_stat_h_mknod_proto=no],[zsh_cv_header_sys_stat_h_mknod_proto=yes])])
-  if test x$zsh_cv_header_sys_stat_h_mknod_proto = xyes; then
-    AC_DEFINE(HAVE_MKNOD_PROTO)
-  fi
-fi
-
 dnl -----------
 dnl named FIFOs
 dnl -----------
