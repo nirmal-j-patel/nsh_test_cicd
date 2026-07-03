@@ -253,11 +253,8 @@ struct timespec {
 
 # include <sys/wait.h>
 
-#ifdef HAVE_SYS_SELECT_H
-# ifndef TIME_H_SELECT_H_CONFLICTS
-#  include <sys/select.h>
-# endif
-#endif
+#include <sys/select.h>
+
 
 #if defined(__APPLE__) && defined(HAVE_SELECT)
 /*

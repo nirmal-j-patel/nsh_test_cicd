@@ -608,19 +608,6 @@ if test x$dynamic = xyes; then
   AC_CHECK_HEADERS(dl.h)
 fi
 
-dnl Some SCO systems cannot include both sys/time.h and sys/select.h
-AH_TEMPLATE([TIME_H_SELECT_H_CONFLICTS],
-[Define if sys/time.h and sys/select.h cannot be both included.])
-if test x$ac_cv_header_sys_time_h = xyes && test x$ac_cv_header_sys_select_h = xyes; then
-  AC_CACHE_CHECK(for conflicts in sys/time.h and sys/select.h,
-  zsh_cv_header_time_h_select_h_conflicts,
-  [AC_COMPILE_IFELSE([AC_LANG_PROGRAM([[#include <sys/time.h>
-#include <sys/select.h>]], [[int i;]])],[zsh_cv_header_time_h_select_h_conflicts=no],[zsh_cv_header_time_h_select_h_conflicts=yes])])
-  if test x$zsh_cv_header_time_h_select_h_conflicts = xyes; then
-    AC_DEFINE(TIME_H_SELECT_H_CONFLICTS)
-  fi
-fi
-
 AH_TEMPLATE([GWINSZ_IN_SYS_IOCTL],
 [Define if TIOCGWINSZ is defined in sys/ioctl.h but not in termios.h.])
 if test x$ac_cv_header_termios_h = xyes; then
