@@ -657,22 +657,6 @@ fi],
    termcap_curses_order="$ncursesw_test $ncurses_test tinfow tinfo termcap curses" ;;
 esac])dnl
 
-AH_TEMPLATE([ZSH_NO_XOPEN],
-[Define if _XOPEN_SOURCE_EXTENDED should not be defined to avoid clashes])
-AC_CACHE_CHECK(if _XOPEN_SOURCE_EXTENDED should not be defined,
-zsh_cv_no_xopen,
-[[case "$host_os" in
-  *freebsd5*|*freebsd6.[012]*|*aix*)
-  zsh_cv_no_xopen=yes
-  ;;
-  *)
-  zsh_cv_no_xopen=no
-  ;;
-esac]])
-if test x$zsh_cv_no_xopen = xyes; then
-  AC_DEFINE(ZSH_NO_XOPEN)
-fi
-
 dnl Check for tigetflag (terminfo) before tgetent (termcap).
 dnl That's so that on systems where termcap and [n]curses are
 dnl both available and both contain termcap functions, while
