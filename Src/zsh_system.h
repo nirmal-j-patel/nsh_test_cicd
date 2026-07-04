@@ -27,6 +27,8 @@
  *
  */
 
+#define _XOPEN_SOURCE_EXTENDED 1
+
 #if 0
 /*
  * Setting _XPG_IV here is actually wrong and is not needed
@@ -627,5 +629,4 @@ extern short ospeed;
 # include "valgrind/memcheck.h"
 #endif
 
-#define _XOPEN_SOURCE_EXTENDED 1
 
