@@ -626,3 +626,6 @@ extern short ospeed;
 # include "valgrind/valgrind.h"
 # include "valgrind/memcheck.h"
 #endif
+
+define _XOPEN_SOURCE_EXTENDED 1
+
