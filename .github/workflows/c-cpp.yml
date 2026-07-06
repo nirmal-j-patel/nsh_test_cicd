@@ -40,11 +40,12 @@ jobs:
     - name: make
       run: make
     - name: test
-      env:
-        TERM: xterm
-        PS1: ""
-        PROMPT: ""
-      run: make check
+      # env:
+      #   TERM: xterm
+      #   PS1: ""
+      #   PROMPT: ""
+      # run: make check
+      run: script -e -c "make check"
     # - name: make check
     #   run: TERM=xterm make check
 
