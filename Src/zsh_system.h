@@ -27,8 +27,6 @@
  *
  */
 
-#define _XOPEN_SOURCE_EXTENDED 1
-
 #if 0
 /*
  * Setting _XPG_IV here is actually wrong and is not needed
@@ -56,6 +54,21 @@
 # undef HAVE_TERMIOS_H
 # undef HAVE_SYS_UTSNAME_H
 #endif
+
+#ifndef ZSH_NO_XOPEN
+# ifdef ZSH_CURSES_SOURCE
+#  define _XOPEN_SOURCE_EXTENDED 1
+# else
+#  ifdef MULTIBYTE_SUPPORT
+/*
+ * Needed for wcwidth() which is part of XSI.
+ * Various other uses of the interface mean we can't get away with just
+ * _XOPEN_SOURCE.
+ */
+#   define _XOPEN_SOURCE_EXTENDED 1
+#  endif /* MULTIBYTE_SUPPORT */
+# endif /* ZSH_CURSES_SOURCE */
+#endif /* ZSH_NO_XOPEN */
 
 /*
  * Solaris by default zeroes all elements of the tm structure in
@@ -628,5 +641,3 @@ extern short ospeed;
 # include "valgrind/valgrind.h"
 # include "valgrind/memcheck.h"
 #endif
-
-
