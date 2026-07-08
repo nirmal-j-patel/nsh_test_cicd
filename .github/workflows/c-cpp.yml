@@ -44,7 +44,7 @@ jobs:
         TERM: xterm
         PS1: ""
         PROMPT: ""
-      run: script -q -e -c "make check"
+      run: script -q -e -c "sh -c 'make check'"
       if: runner.os == 'Linux'
 
     - name: test
@@ -52,7 +52,7 @@ jobs:
         TERM: xterm
         PS1: ""
         PROMPT: ""
-      run: script -q /dev/null make check
+      run: script -q /dev/null sh -c "make check"
       if: runner.os == 'macOS'
     # - name: make check
     #   run: TERM=xterm make check
