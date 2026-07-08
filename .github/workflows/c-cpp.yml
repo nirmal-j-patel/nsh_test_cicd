@@ -40,12 +40,20 @@ jobs:
     - name: make
       run: make
     - name: test
-      # env:
-      #   TERM: xterm
-      #   PS1: ""
-      #   PROMPT: ""
-      # run: make check
-      run: script -e -c "make check"
+      env:
+        TERM: xterm
+        PS1: ""
+        PROMPT: ""
+      run: script -q -e -c "make check"
+      if: runner.os == 'Linux'
+
+    - name: test
+      env:
+        TERM: xterm
+        PS1: ""
+        PROMPT: ""
+      run: script -q /dev/null make check
+      if: runner.os == 'macOS'
     # - name: make check
     #   run: TERM=xterm make check
 
